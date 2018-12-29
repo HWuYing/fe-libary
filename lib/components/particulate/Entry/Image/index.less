@@ -1,0 +1,42 @@
+.image-content {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-list {
+  position: absolute;
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  .image-item {
+    position: relative;
+    display: inline-block;
+    margin: 0 5px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .event-div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+}
+
+.image-modal {
+  width: 100%;
+}

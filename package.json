@@ -1,0 +1,113 @@
+{
+  "name": "fe-library",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "homepage": "http://gitlab.wq.com/fe/fe-library",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "precommit": "npm run lint-staged",
+    "build": "npm run dist",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dist": "babel src --out-dir lib --copy-files",
+    "lint-style": "stylelint --syntax less",
+    "lint-staged": "lint-staged",
+    "prettier": "prettier --write ./src/**/**/**/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://gitlab.wq.com/fe/fe-library.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/node": "^7.0.0",
+    "@babel/plugin-proposal-async-generator-functions": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.0.0",
+    "@babel/plugin-proposal-json-strings": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-syntax-import-meta": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.3.0",
+    "prettier": "^1.14.3",
+    "stylelint": "^9.6.0",
+    "stylelint-config-prettier": "^4.0.0",
+    "stylelint-config-standard": "^18.2.0"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0",
+    "ali-oss": "^6.0.1",
+    "antd": "^3.9.2",
+    "body-parser": "^1.18.3",
+    "connect-redis": "^3.3.3",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "history": "^4.7.2",
+    "node-fetch": "^2.2.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
+    "whatwg-fetch": "^3.0.0"
+  },
+  "lint-staged": {
+    "src/*.{js,jsx,less}": [
+      "prettier --write",
+      "git add"
+    ],
+    "src/*.{js,jsx}": "eslint --ext .js,jsx src",
+    "**/*.less": "stylelint --syntax less"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "edge": "17",
+            "firefox": "60",
+            "chrome": "67",
+            "safari": "11.1",
+            "browsers": [
+              ">1%",
+              "last 4 versions",
+              "Firefox ESR",
+              "not ie < 9"
+            ]
+          }
+        }
+      ],
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "legacy": true
+        }
+      ],
+      "@babel/plugin-syntax-dynamic-import",
+      "@babel/plugin-syntax-import-meta",
+      [
+        "@babel/plugin-proposal-class-properties",
+        {
+          "loose": false
+        }
+      ],
+      "@babel/plugin-proposal-json-strings",
+      "@babel/plugin-proposal-async-generator-functions"
+    ]
+  }
+}

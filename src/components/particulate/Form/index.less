@@ -1,0 +1,50 @@
+:global {
+  .form-aggregate {
+    overflow-x: hidden;
+  }
+}
+
+.form-item-line {
+  div[class*='ant-row ant-form-item'] {
+    display: flex;
+    margin-bottom: 24px;
+  }
+
+  div[class*='ant-form-item-control-wrapper'] {
+    flex: 1;
+  }
+
+  div[class*='has-feedback'] {
+    display: block;
+  }
+
+  .label-width {
+    display: inline-block;
+    line-height: 20px;
+    white-space: normal;
+  }
+
+  .line {
+    :global(.ant-form-item-required) {
+      .label-width:before {
+        display: inline-block;
+        margin-right: 4px;
+        content: "*";
+        line-height: 1;
+        font-size: 14px;
+        color: #f5222d;
+      }
+
+      &:before {
+        display: none;
+      }
+    }
+  }
+
+
+  span[class*='ant-form-item-children'] {
+    & > span[class*='ant-calendar-picker'] {
+      width: 100%;
+    }
+  }
+}

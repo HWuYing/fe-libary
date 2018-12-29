@@ -1,0 +1,27 @@
+.search-form {
+  margin-bottom: 10px;
+
+  div[class*='form-aggregate'] {
+    float: left;
+    margin-right: -160px;
+    padding-right: 170px;
+    width: 100%;
+    box-sizing: border-box;
+
+    div[class*='ant-row ant-form-item'] {
+      margin-bottom: 10px;
+    }
+  }
+
+  div[class*='form-slot'] {
+    float: left;
+    width: 150px;
+    line-height: 39px;
+  }
+
+  &::after {
+    content: ' ';
+    display: table;
+    clear: both;
+  }
+}
