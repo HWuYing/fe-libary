@@ -62,7 +62,11 @@ class Standard extends Component {
 
   onSearch(fields) {
     this.search = { ...fields };
-    this.fetchList();
+    if (this.table && this.table.getPaginationParams) {
+      this.table.resetPaginationParams();
+    } else {
+      this.fetchList();
+    }
   }
 
   getPage() {
@@ -107,22 +111,22 @@ class Standard extends Component {
       onExpand,
       author,
     } = this.props;
+    const mergeProps = author ? { author } : {};
     return (
       <Fragment>
         <Form
           parseFields={parseFields}
           layoutCol={layoutCol}
-          author={author}
           rootContext={formContext}
           getForm={saveRef(this, 'form')}
           onSubmit={(...arg) => this.onSearch(...arg)}
+          {...mergeProps}
         />
         <Table
           {...{
             ...(expandedRowKeys ? { expandedRowKeys } : {}),
             ...(onExpand ? { onExpand } : {}),
           }}
-          author={author}
           deleteStatus={deleteStatus}
           defaultExpandAllRows={defaultExpandAllRows}
           rootContext={tableContext}
@@ -136,6 +140,7 @@ class Standard extends Component {
           onChange={(...arg) => this.onTableChange(...arg)}
           dataSource={dataSource}
           total={total}
+          {...mergeProps}
         />
         <div ref={f => this.getPage(f)} style={{ display: 'none' }} />
       </Fragment>
@@ -155,7 +160,7 @@ export default (Form = () => null, Table = () => null) =>
     layoutCol: 3,
     columnsRender: [],
     defaultFetch: true,
-    author: {},
+    author: undefined,
     getPage: f => f,
     parseFields: f => f,
     renderTools: () => [],

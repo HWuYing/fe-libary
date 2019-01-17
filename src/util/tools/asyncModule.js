@@ -31,7 +31,8 @@ function registryAsyncModule(key, importLoader) {
   }
   Object.assign(moduleMap, {
     [key]: factoryImportLoader(importLoader),
-  })
+  });
+  return () => getAsyncModule(key);
 }
 
 async function getAsyncModule(key) {

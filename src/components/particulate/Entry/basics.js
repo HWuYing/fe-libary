@@ -1,5 +1,5 @@
 import { hasOwnProperty, factory } from '@particulate';
-import { Input, InputNumber, Rate, DatePicker, Steps } from 'antd';
+import { Input, InputNumber, Rate, DatePicker, Steps, Slider } from 'antd';
 import Switch from './Switch';
 import EntrySelect from './Select';
 import EntryRadioGroup from './RadioGroup';
@@ -45,6 +45,7 @@ const mapEntry = {
     tagGroup: CheckableTagGroup,
     dateRange: EntryDateRange,
     steps: Steps,
+    slider: Slider,
   }),
 };
 

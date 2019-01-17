@@ -70,8 +70,13 @@ class StandardPage extends Component {
   }
 
   onSearch(fields) {
+    const paneList = this.tables[`${this.currentActiveKey}-TABLE`];
     this.search = { ...fields };
-    this.fetchList();
+    if (paneList && paneList.resetPaginationParams) {
+      paneList.resetPaginationParams();
+    } else {
+      this.fetchList();
+    }
   }
 
   getPage(form) {
@@ -113,6 +118,7 @@ class StandardPage extends Component {
       onBatchDelete,
       ENUM_STATUS,
       storeState,
+      author: propsAuthor,
       deleteStatus,
     } = this.props;
     return Object.keys(ENUM_STATUS).map(key => {
@@ -122,7 +128,7 @@ class StandardPage extends Component {
         <TabPane tab={item.label} key={key}>
           <Table
             deleteStatus={deleteStatus}
-            author={{ enumKey: key }}
+            author={{ enumKey: key, ...propsAuthor }}
             defaultExpandAllRows={defaultExpandAllRows}
             rootContext={{ enumKey: key, ...tableContext }}
             getTable={table => this.getTable(table, key)}
@@ -149,7 +155,9 @@ class StandardPage extends Component {
       formContext,
       renderPageTools,
       defaultActiveKey,
+      author,
     } = this.props;
+    const mergeProps = author ? { author } : {};
     return (
       <Fragment>
         <Form
@@ -158,6 +166,7 @@ class StandardPage extends Component {
           rootContext={formContext}
           getForm={f => this.getPage(f)}
           onSubmit={(...arg) => this.onSearch(...arg)}
+          { ...mergeProps }
         />
         {typeof renderPageTools === 'function' ? renderPageTools() : renderPageTools}
         <Tabs

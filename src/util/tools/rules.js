@@ -122,10 +122,11 @@ export const password = {
   message: '请填写数字或字母字符',
 };
 
-export const minZoreToMaxOneHundred = {
+export const minZoreToMaxOneHundred = factoryRules({
   pattern: /(^(0|100)$)|(^[1-9]\d?$)/i,
   message: `请输入0到100到整数`,
-};
+});
+
 export const toFloat = (fixed = 2) => ({
   pattern: new RegExp(`(^(0|([1-9]{1}\\d{0,1})){1}(\\.\\d{1,${fixed}}){0,1}$)|(^(0|100)$)`, 'i'),
   message: `请输入0-100的数字，最多两位小数`,

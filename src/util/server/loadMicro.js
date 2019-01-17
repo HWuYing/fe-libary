@@ -32,6 +32,7 @@ export default async (menu, context) => {
   microCache[host] = {
     AppMicro: ({children}) => <Fragment>{children}</Fragment>,
     $util: createUtil(host),
+    host,
   };
   return {
     path: menu.path,

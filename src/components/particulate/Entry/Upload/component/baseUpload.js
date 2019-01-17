@@ -74,7 +74,7 @@ export default class BaseUpload extends Component {
 
           this.setState({ fileList: newFileList });
           this.onFileChange(newFileList);
-        } else message.error('上传附近失败！');
+        } else message.error('上传附件失败！');
       });
     };
     return false;

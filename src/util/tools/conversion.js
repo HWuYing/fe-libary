@@ -37,8 +37,18 @@ export const moneyToYuan = (val, defaultValue='--') => {
   return !val && val !== 0 ? defaultValue : Number(val) / 100;
 };
 
-export const yuanToMoney = val => {
-  return !val && val !== 0 ? val : Number(val) * 100;
+export const yuanToMoney = (val, defaultValue=0) => {
+  return !val && val !== 0 ? defaultValue : Number(val) * 100;
+};
+
+export const moneyToUCurrency = (val, exchange) => {
+  if (!exchange && exchange !== 0) return '暂无数据';
+  return !val && val !== 0 ? val : `${(Number(val / 100) * Number(exchange / 100)).toFixed(2)} U币`;
+};
+
+export const uCurrentToMoney = (val, coinExchange) => {
+  if (!exchange && exchange !== 0) return '暂无数据';
+  return !val && val !== 0 ? val : (Number(val) / Number(coinExchange)).toFixed(2);
 };
 
 export const valueToString = val => {

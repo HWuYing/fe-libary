@@ -46,11 +46,11 @@ const FetchType = {
 };
 
 
-async function Interface(host, url, method, body, headers, context, isNotError, crossDomain, resultType) {
+async function Interface(host, url, method, body, headers, context, isNotError, isLoading, crossDomain, resultType) {
   let res;
   const applyFetchFn = FetchType[resultType];
   try {
-    res = await interfaceRequest(applyFetchFn(), { host, url, method, body, headers }, context, isNotError, crossDomain);
+    res = await interfaceRequest(applyFetchFn(), { host, url, method, body, headers }, context, isNotError, isLoading, crossDomain);
   } catch (e) {
     console.log(e);
     throw e;
@@ -61,20 +61,20 @@ async function Interface(host, url, method, body, headers, context, isNotError, 
 const InterfaceList = methods.reduce(
   (m, method) =>
     Object.assign(m, {
-      [method.toLocaleLowerCase()]: async (host, url, body, headers, context, isNotError, crossDomain, resultType) => {
-        const res = await Interface(host, url, method, body, headers, context, isNotError, crossDomain, resultType);
+      [method.toLocaleLowerCase()]: async (host, url, body, headers, context, isNotError,isLoading, crossDomain, resultType) => {
+        const res = await Interface(host, url, method, body, headers, context, isNotError, isLoading, crossDomain, resultType);
         return res;
       },
     }),
   {}
 );
 
-function factoryInterfaceRequest(host = '/', resultType='json', defaultIsNotError = false, defaultCrossDomain = true) {
+function factoryInterfaceRequest(host = '/', resultType='json', defaultIsNotError = false, defaultCrossDomain = true, defaultIsLoading = true) {
   return Object.keys(InterfaceList).reduce(
     (m, method) =>
       Object.assign(m, {
-        [method]: async (url, { body, context, isNotError = defaultIsNotError, crossDomain=defaultCrossDomain, headers = {} }) => {
-          const res = InterfaceList[method](host, url, body, headers, context, isNotError, crossDomain, resultType);
+        [method]: async (url, { body, context, isNotError = defaultIsNotError, crossDomain=defaultCrossDomain, isLoading=defaultIsLoading, headers = {} }) => {
+          const res = InterfaceList[method](host, url, body, headers, context, isNotError, isLoading, crossDomain, resultType);
           return res;
         },
       }),

@@ -13,10 +13,14 @@ class Util {
     const typeFn = typeMold(menu);
     let format = menu;
     if (typeFn('string')) format = { name: menu };
-    return Object.assign(format, {
+    return Object.assign({}, format, {
       hasKey: this.host,
     });
   }
+
+  getHost = () => this.host;
+
+  setHost = (host) => this.host = host;
 
   openPage = menu => {
     event.$emit('@PAGE_LABEL_ON_PAGE', this.formatMenu(menu), this.fromMenu);

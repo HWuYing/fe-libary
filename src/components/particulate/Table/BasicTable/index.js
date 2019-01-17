@@ -145,8 +145,8 @@ class CombinationTable extends TableComponent {
       super.onSelectionChange([], []);
       updateState.dataSource = CombinationTable.formatDataSource(nextProps.dataSource, nextProps.rowKey, nextProps.isDeleteNullLast);
     }
-    if (this.mergeProps.rowSelection) {
-      const { selectedRowKeys = [] } = this.mergeProps.rowSelection;
+    if (this.mergeProps.rowSelection && this.mergeProps.rowSelection.selectedRowKeys) {
+      const { selectedRowKeys } = this.mergeProps.rowSelection;
       updateState.selectedRowKeys = selectedRowKeys;
       this.selectedRows = (updateState.dataSource || dataSource || []).filter((item) => selectedRowKeys.includes(item[rowKey]));
     }
@@ -216,7 +216,7 @@ class CombinationTable extends TableComponent {
   }
 
   initial(props) {
-    const { author } = props;
+    const { author, onRow } = props;
     this.mergeProps = {
       ...CombinationTable.initialMergeProps(props),
       columns: authorizedFilter(
@@ -228,7 +228,7 @@ class CombinationTable extends TableComponent {
         this.context,
       ),
       rowSelection: this.initRowSelection(props),
-      onRow: (...arg) => ({
+      onRow: onRow ? onRow : (...arg) => ({
         onClick: () => this.onRowClick(...arg),
       }),
     };

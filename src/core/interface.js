@@ -2,6 +2,8 @@ import fetch from 'node-fetch';
 import { typeMold } from '../util/tools';
 import formOptions from '../util/fetch/core/formatOptions';
 
+const { NODE_ENV, LOGOUT } = process.env;
+const logOut = NODE_ENV !== 'production' || [ 'true', true ].includes(LOGOUT);
 const time = 50000;
 
 class InterfaceServer {
@@ -57,7 +59,13 @@ class InterfaceServer {
     const { url: formatUrl, headers, ...options } = formOptions({ host, url, body, method });
     const { token, platform } = req.headers || {};
     const { token: sessionToken } = req.session || {};
-    console.log(`${formatUrl}`, body);
+    if (logOut) {
+      console.log(`[start]:   `, formatUrl);
+      console.log(`[body]:    `, body);
+      console.log(`[method]:  `, method);
+      console.log(`[platform]:`, platform || this.platform);
+      console.log(`[token]:   `, token || sessionToken);
+    }
     const result = await fetch(formatUrl, {
       method,
       ...options,
@@ -75,7 +83,12 @@ class InterfaceServer {
     });
     let api = result.url;
     let json = await result.json();
-    if (result.status >= 200 && result.status < 300) api = formatUrl;
+    if (result.status >= 200 && result.status < 300) {
+      api = formatUrl;
+    }
+    if (logOut) {
+      console.log('[end]:      ===================================================');
+    }
     return Object.assign(json, {
       api,
     });

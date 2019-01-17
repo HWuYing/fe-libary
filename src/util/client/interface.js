@@ -36,8 +36,8 @@ function checkStatus([res, response]) {
   throw error;
 }
 
-export default function Interface(fetch, options, context, isNotError, crossDomain) {
-  $eventbus.$emit('LOADING-OPEN');
+export default function Interface(fetch, options, context, isNotError, isLoading, crossDomain) {
+  if (isLoading) $eventbus.$emit('LOADING-OPEN');
   const { headers } = options;
   const token = window.getToken && window.getToken();
   return fetch({
@@ -58,7 +58,7 @@ export default function Interface(fetch, options, context, isNotError, crossDoma
   })
     .then(checkStatus)
     .then(([fn]) => fn()).then((result) =>  {
-      $eventbus.$emit('LOADING-CLOSE');
+      if (isLoading) $eventbus.$emit('LOADING-CLOSE');
       if (!isNotError) {
         const eventEmitter = $eventbus.get('ERROR-INTERCEPT');
         if (eventEmitter && eventEmitter.length) return new Promise((resolve, reject) => {
@@ -68,7 +68,7 @@ export default function Interface(fetch, options, context, isNotError, crossDoma
       return result;
     })
     .catch((e) => {
-      $eventbus.$emit('LOADING-CLOSE');
+      if (isLoading) $eventbus.$emit('LOADING-CLOSE');
       throw e;
     });
 };

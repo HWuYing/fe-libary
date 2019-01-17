@@ -40,9 +40,24 @@ class PaginationTable extends TableComponent {
     };
   }
 
+  setPaginationParams(pageNum, pageSize) {
+    this.onChange(pageNum, pageSize);
+  }
+
+  resetPaginationParams() {
+    const {
+      current,
+      pageSize,
+      pagination: { defaultPageSize, defaultCurrent },
+    } = this.props;
+    this.setPaginationParams(current || defaultCurrent, pageSize || defaultPageSize);
+  }
+
   getTable(table) {
     super.getTable(table, {
       getPaginationParams: (...arg) => this.getPaginationParams(...arg),
+      setPaginationParams: (...arg) => this.setPaginationParams(...arg),
+      resetPaginationParams: (...arg) => this.resetPaginationParams(...arg),
     });
   }
 
@@ -84,6 +99,8 @@ class PaginationTable extends TableComponent {
     return paginationProps;
   }
 
+
+
   render() {
     return (
       <Fragment>
@@ -108,6 +125,7 @@ export default (column, rowSelection, option) =>
       showSizeChanger: true,
       defaultCurrent: 1,
       defaultPageSize: 20,
+      pageSizeOptions: ['10', '20', '40', '100', '200'],
     },
     ...option,
   });

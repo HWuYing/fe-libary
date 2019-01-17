@@ -25,7 +25,7 @@ function formatBody({ body, method }) {
 
 function clientBodyUndefined(options) {
   const { body } = options;
-
+  if (Array.isArray(body)) return options;
   return Object.assign(options, {
     body: Object.keys(body || {}).reduce((o, key) => {
       const object = body[key];
